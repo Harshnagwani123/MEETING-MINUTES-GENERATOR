@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meeting Minutes Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const fileInput = document.getElementById("file");
+            const fileNameDisplay = document.getElementById("file-name");
+
+            // Display the selected file name
+            fileInput.addEventListener("change", function() {
+                const file = fileInput.files[0];
+                if (file) {
+                    fileNameDisplay.textContent = `Selected file: ${file.name}`;
+                } else {
+                    fileNameDisplay.textContent = "";
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Meeting Minutes Generator</h1>
+        <p>
+            Upload your audio file, select the desired transcription model and summarization level, or record audio in real-time, and get a professional summary in seconds!
+        </p>
+
+        <form action="/transcribe" method="POST" enctype="multipart/form-data">
+            <!-- File Upload -->
+            <label for="file">Upload Audio File:</label>
+            <input type="file" name="file" id="file" accept="audio/*">
+            <p id="file-name"></p>  <!-- Display selected file name here -->
+
+            <!-- Transcription Model -->
+            <label for="model">Choose Transcription Model:</label>
+            <select id="model" name="model">
+                <option value="tiny">Tiny (Fast, Less Accurate)</option>
+                <option value="base">Base (Standard Accuracy)</option>
+                <option value="small">Small (Good Accuracy)</option>
+                <option value="medium">Medium (High Accuracy)</option>
+                <option value="large">Large (Very High Accuracy)</option>
+            </select>
+
+            <!-- Summarization Level -->
+            <label for="summary_level">Choose Summary Level:</label>
+            <select id="summary_level" name="summary_level">
+                <option value="brief">Brief Summary</option>
+                <option value="detailed">Detailed Summary</option>
+                <option value="full">Full Transcription</option>
+            </select>
+
+            <!-- Output Format -->
+            <label for="format">Choose Output Format:</label>
+            <select id="format" name="format">
+                <option value="txt">Text File (TXT)</option>
+                <option value="pdf">PDF</option>
+                <option value="docx">Word Document (DOCX)</option>
+            </select>
+
+            <!-- Submit Button -->
+            <input type="submit" value="Generate Minutes">
+        </form>
+    </div>
+
+</body>
+</html>
